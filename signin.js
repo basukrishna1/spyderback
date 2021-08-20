@@ -5,6 +5,7 @@ const app = express()
 const port = process.env.PORT || 3000
 require("./database/data");
 const Register= require("./data structure/data scheme")
+const Product=require("./data structure/product")
 app.set("view engine","hbs");
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
@@ -69,6 +70,19 @@ app.post('/signin', async(req, res) => {
         res.status(404).send("Invalid credentials")
     }
   }) 
+app.post("/add",async(req,res)=>{
+
+    const productdata = new Product({
+        id:req.body.id,
+        product_name:req.body.product_name,
+        label:req.body.label,
+        desc:req.body.desc,
+        comment:req.body.comment
+    })
+const pro = await productdata.save()
+res.status(201).render("bidding")
+
+})  
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
