@@ -50,7 +50,7 @@ app.post("/register",async(req,res)=>{
         else
          res.send("password not matching");
 
-    } catch (error) {
+    } catch (error){
         res.send("error1")
     }
 }) 
@@ -59,9 +59,12 @@ app.post('/signin', async(req, res) => {
 
         const username=req.body.username
         const password=req.body.password
-        
         const usermail = await Register.findOne({email:username})
-        if(usermail.password===password){
+        console.log(password)
+        console.log(usermail.password)
+        const match= await bcrypt.compare(password,usermail.password)
+        console.log(match)
+        if(match){
             res.render('bidding')
         }
         else
