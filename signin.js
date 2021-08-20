@@ -10,6 +10,10 @@ app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 
 
+app.get('/signin', (req, res) => {
+    res.render('signin')
+  })
+
 app.get('/', (req, res) => {
     res.render('signin')
   }) 
@@ -19,6 +23,13 @@ app.get('/register', (req, res) => {
     res.render('register')
   })
 
+app.get('/add', (req, res) => {
+    res.render('add')
+  })
+
+app.get('/bidding', (req, res) => {
+    res.render('bidding')
+  })  
 app.post("/register",async(req,res)=>{
     try {
         const password= req.body.password;
@@ -50,7 +61,7 @@ app.post('/signin', async(req, res) => {
         
         const usermail = await Register.findOne({email:username})
         if(usermail.password===password){
-            res.status(201).send("logged in")
+            res.render('bidding')
         }
         else
         res.send("Incorrect password")
